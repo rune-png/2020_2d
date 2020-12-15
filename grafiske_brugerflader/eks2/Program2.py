@@ -52,12 +52,3 @@ root = tk.Tk()
 prg = Program2()
 prg.master.title('Eksempel 2')
 prg.mainloop()
-
-#Opgaver:
-
-#Funktionen button1_action bruger slet ikke det tekstfelt, der hedder "entry2"
-#Tilføj personens alder til den tekst, der skrives i tekstfeltet.
-
-#På denne side kan du finde lidt mere information om Text-widget.
-#Den har mange muligheder for at vise teksten på forskellige måder:
-# https://www.python-course.eu/tkinter_text_widget.php

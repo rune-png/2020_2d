@@ -26,12 +26,3 @@ root = tk.Tk()
 prg = KnapProgram1()
 prg.master.title('Eksempel 1')
 prg.mainloop()
-
-#Opgaver:
-# Lav en ændring i funktionen "knap1_action",
-# og vælg en anden tekst til knappen.
-
-#Prøv at ændre i de linjer, hvor pack()-funktionen kaldes.
-#Lav side=tk.TOP om til side=tk.BOTTOM, og se hvad resultatet bliver.
-
-# Tilføj endnu en knap.
