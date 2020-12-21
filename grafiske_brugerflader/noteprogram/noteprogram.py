@@ -9,6 +9,8 @@ class NoteProgram(tk.Frame):
 
         self.data = NoteData()
 
+        self.filtered = False
+
         self.build_gui()
 
 
@@ -38,6 +40,7 @@ class NoteProgram(tk.Frame):
         self.note_grid.delete(*self.note_grid.get_children())
         for note in notes:
             self.note_grid.insert("", tk.END, values=(note['date'].strftime('%Y-%m-%d %H:%M:%S.%f'), note['category'], note['text']))
+        self.cbKategori['values'] = self.data.get_categories()
 
     def new_note(self):
         def insert():
@@ -54,16 +57,16 @@ class NoteProgram(tk.Frame):
 
         dialog = tk.Toplevel()
 
-        lblKategori = tk.Label(dialog, text="Kategori")
+        lblKategori = ttk.Label(dialog, text="Kategori")
         kategorier = self.data.get_categories()
         cat_value=tk.StringVar()
         cbKategori = ttk.Combobox(dialog, values = kategorier, textvariable=cat_value)
 
-        lblNote = tk.Label(dialog, text="Note")
+        lblNote = ttk.Label(dialog, text="Note")
         textNote = tk.Text(dialog, height=4)
 
-        butCancel = tk.Button(dialog, text="Annuller", command=cancel)
-        butOK = tk.Button(dialog, text="OK", command=insert)
+        butCancel = ttk.Button(dialog, text="Annuller", command=cancel)
+        butOK = ttk.Button(dialog, text="OK", command=insert)
 
         lblKategori.grid(column = 0, row = 0)
         cbKategori.grid(column = 1, row = 0)
@@ -81,6 +84,14 @@ class NoteProgram(tk.Frame):
         pass
         #Gem ændringer i datalaget
 
+    def update_filter_on(self):
+        self.filtered = True
+        self.update_grid()
+
+    def update_filter_off(self):
+        self.filtered = False
+        self.update_grid()
+
     def build_gui(self):
         right_frame = tk.Frame(self)
         self.button_frame = tk.Frame(self)
@@ -94,23 +105,33 @@ class NoteProgram(tk.Frame):
         self.pack()
 
         # Button frame
-        self.but_new = tk.Button(self.button_frame, text = "Ny note", command=self.new_note)
-        self.but_delete = tk.Button(self.button_frame, text = "Slet note", command=self.delete_note)
+        self.but_new = ttk.Button(self.button_frame, text = "Ny note", command=self.new_note)
+        self.but_delete = ttk.Button(self.button_frame, text = "Slet note", command=self.delete_note)
         separator = ttk.Separator(self.button_frame, orient='horizontal')
-        lbl_filter = tk.Label(self.button_frame, text = "Filter")
+        lbl_filter = ttk.Label(self.button_frame, text = "Filter")
+
+        lblKategori = ttk.Label(self.button_frame, text="Kategori")
+        kategorier = self.data.get_categories()
+        self.cat_value=tk.StringVar()
+        self.cbKategori = ttk.Combobox(self.button_frame, values = kategorier, textvariable=self.cat_value)
+        but_filter_on = ttk.Button(self.button_frame, text="Filtrér", command=self.update_filter_on)
+        but_filter_off = ttk.Button(self.button_frame, text="Slet filter", command=self.update_filter_off)
 
         self.but_new.pack(side=tk.TOP)
         self.but_delete.pack(side=tk.TOP)
         separator.pack(side=tk.TOP)
         lbl_filter.pack(side=tk.TOP)
+        self.cbKategori.pack(side=tk.TOP)
+        but_filter_on.pack(side=tk.TOP)
+        but_filter_off.pack(side=tk.TOP)
 
         # Edit frame
-        self.lbl_date = tk.Label(self.edit_frame, text = "Dato: ")
-        self.lbl_cat = tk.Label(self.edit_frame, text = "Kategori: ")
-        self.entry_cat = tk.Entry(self.edit_frame, text = "")
+        self.lbl_date = ttk.Label(self.edit_frame, text = "Dato: ")
+        self.lbl_cat = ttk.Label(self.edit_frame, text = "Kategori: ")
+        self.entry_cat = ttk.Entry(self.edit_frame, text = "")
         self.ed_content = tk.Text(self.edit_frame, height=8)
-        self.but_save = tk.Button(self.edit_frame, text = "Gem", command=self.save_note)
-        self.but_cancel = tk.Button(self.edit_frame, text = "Fortryd", command=self.cancel_edit)
+        self.but_save = ttk.Button(self.edit_frame, text = "Gem", command=self.save_note)
+        self.but_cancel = ttk.Button(self.edit_frame, text = "Fortryd", command=self.cancel_edit)
 
         self.lbl_date.grid(row = 0, column = 0, columnspan = 2)
         self.lbl_cat.grid(row = 1, column = 0)
