@@ -30,8 +30,9 @@ class NoteData():
         return res
 
     def delete_note(self, date):
-        #Pas på! Formatet kan være anderledes på forskellige computere.
-        d = datetime. strptime(date, '%Y-%m-%d %H:%M:%S.%f')
+        #Datoformatet kan være anderledes på forskellige computere,
+        # derfor specificeres det her.
+        d = datetime.strptime(date, '%Y-%m-%d %H:%M:%S.%f')
         for n in self.notes:
             if n['date'] == d:
                 self.notes.remove(n)
