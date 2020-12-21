@@ -29,6 +29,11 @@ class NoteData():
             res = notes
         return res
 
+    def update_note(self, timestamp, category, text):
+        pass
+        #Led gennem listen af noter, og find en med det rigtige timestamp
+        #Lav notens tekst og kategori om.
+
     def delete_note(self, date):
         #Datoformatet kan være anderledes på forskellige computere,
         # derfor specificeres det her.
@@ -47,9 +52,3 @@ if __name__ == '__main__':
 
     print(data.get_categories())
     print(data.get_notes('Sports'))
-
-#Opgaver:
-#Persistens med pickle?
-#Vis noter i tidsinterval
-#Flere faner?
-#Dialogbokse
